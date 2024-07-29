@@ -1,5 +1,8 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
+#include <sstream>
+#include <fstream>
+#include <string>
 
 #ifdef __APPLE__
 #include <OpenGL/gl3.h>
@@ -8,6 +11,40 @@
 
 #define NORMALIZE_COLOR(value) (static_cast<float>(value) / 255.0f)
 
+struct ShaderProgramSource
+{
+    std::string vertexShader;
+    std::string fragmentShader;
+};
+
+static ShaderProgramSource loadShader(std::string filepath)
+{
+    std::ifstream stream(filepath);
+    
+    enum class ShaderType
+    {
+        NONE = -1, VERTEX = 0, FRAGMENT = 1,
+    };
+    
+    std::string line;
+    std::stringstream ss[2];
+    ShaderType mode = ShaderType::NONE;
+    
+    while(getline(stream, line))
+    {
+        if (line.find("#SHADER") != std::string::npos) {
+            if (line.find("VERTEX") != std::string::npos) {
+                mode = ShaderType::VERTEX;
+            } else if (line.find("FRAGMENT")) {
+                mode = ShaderType::FRAGMENT;
+            }
+        } else {
+            ss[(int)mode] << line << "\n";
+        }
+    }
+    
+    return { ss[0].str(), ss[1].str() };
+}
 
 static unsigned int compileShader(unsigned int type, const std::string& source)
 {
@@ -70,7 +107,7 @@ int main(void)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 #ifdef __APPLE__
-    printf("Hello, Apple.");
+    printf("Hello, Apple.\n");
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
@@ -89,9 +126,11 @@ int main(void)
      glGenVertexArrays(1, &vao);
      glBindVertexArray(vao);
     
-    static const float positions[6] = { -0.5f, -0.5f,
+    static const float positions[] = {
+        -0.5f, -0.5f,
         0.5f, -0.5f,
-        0.0f, 0.5f,
+        0.5f, 0.5f,
+        -0.5f, 0.5f,
     }; // Buffer, on the CPU
 
     unsigned int buffer; // The ID of the generated buffer
@@ -99,32 +138,21 @@ int main(void)
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
     
+    static const unsigned int indices[] = { // index buffer
+        0, 1, 2,
+        2, 3, 0
+    };
+    unsigned int ibo; // Index Buffer Object
+    glGenBuffers(1, &ibo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
     
-    std::string vertexShader =
-        "#version 330 core\n"
-        ""
-        "layout(location = 0) in vec4 position;\n"
-        ""
-        "void main()\n"
-        "{\n"
-        "   gl_Position = position;\n"
-        "}\n"
-        "";
-    
-    std::string fragmentShader =
-        "#version 330 core\n"
-        ""
-        "layout(location = 0) out vec4 color;\n"
-        ""
-        "void main()\n"
-        "{\n"
-        "   color = vec4(0.96f, 0.75f, 0.25f, 1.0f);\n"
-        "}\n"
-        "";
-    
-    unsigned int program = createShader(vertexShader, fragmentShader);
+    ShaderProgramSource shader = loadShader("res/shaders/basic.shader");
+
+    unsigned int program = createShader(shader.vertexShader, shader.fragmentShader);
     glUseProgram(program);
 
     /* Loop until the user closes the window */
@@ -133,7 +161,12 @@ int main(void)
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
         
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        glDrawElements(
+                       GL_TRIANGLES,
+                       6, // number of indices not vertices
+                       GL_UNSIGNED_INT,
+                       nullptr // no need to specify it here since we bound the ibo to the GL_ELEMENT_ARRAY_BUFFER slot
+        );
         
         /* Drawing a Triangle in Legacy OpenGL */
         // glBegin(GL_TRIANGLES);
@@ -151,7 +184,7 @@ int main(void)
     
     glDisableVertexAttribArray(0);
     glDeleteProgram(program);
-     glDeleteVertexArrays(1, &vao);
+    glDeleteVertexArrays(1, &vao);
     glfwTerminate();
     
     return 0;

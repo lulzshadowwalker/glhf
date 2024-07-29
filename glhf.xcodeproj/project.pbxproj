@@ -37,6 +37,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2928B9562C56CB1E00391A57 /* basic.shader */ = {isa = PBXFileReference; lastKnownFileType = text; path = basic.shader; sourceTree = "<group>"; };
 		295E2D422C556FB500EB0988 /* glhf */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = glhf; sourceTree = BUILT_PRODUCTS_DIR; };
 		295E2D452C556FB500EB0988 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		295E2D4D2C5570B800EB0988 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -57,6 +58,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2928B9542C56CB0700391A57 /* res */ = {
+			isa = PBXGroup;
+			children = (
+				2928B9552C56CB0B00391A57 /* shaders */,
+			);
+			path = res;
+			sourceTree = "<group>";
+		};
+		2928B9552C56CB0B00391A57 /* shaders */ = {
+			isa = PBXGroup;
+			children = (
+				2928B9562C56CB1E00391A57 /* basic.shader */,
+			);
+			path = shaders;
+			sourceTree = "<group>";
+		};
 		295E2D392C556FB500EB0988 = {
 			isa = PBXGroup;
 			children = (
@@ -77,6 +94,7 @@
 		295E2D442C556FB500EB0988 /* glhf */ = {
 			isa = PBXGroup;
 			children = (
+				2928B9542C56CB0700391A57 /* res */,
 				295E2D452C556FB500EB0988 /* main.cpp */,
 			);
 			path = glhf;
