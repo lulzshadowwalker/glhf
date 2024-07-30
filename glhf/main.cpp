@@ -11,6 +11,28 @@
 
 #define NORMALIZE_COLOR(value) (static_cast<float>(value) / 255.0f)
 
+#define ASSERT(x) if(!(x)) __builtin_trap()
+
+#define GLCall(x)\
+    GLClearError();\
+    x;\
+    ASSERT(!GLHasError(#x, __FILE__, __LINE__))
+
+static void GLClearError() {
+    while(glGetError() != GL_NO_ERROR);
+}
+
+static bool GLHasError(std::string method, std::string filename, int line) {
+    if (GLenum error = glGetError() != GL_NO_ERROR)
+    {
+        printf("Error %d: %s at %s:%d\n", error, method.c_str(), filename.c_str(), line);
+        return true;
+    }
+    
+    return false;
+}
+
+
 struct ShaderProgramSource
 {
     std::string vertexShader;
@@ -39,6 +61,7 @@ static ShaderProgramSource loadShader(std::string filepath)
                 mode = ShaderType::FRAGMENT;
             }
         } else {
+            ASSERT((int)mode != -1);
             ss[(int)mode] << line << "\n";
         }
     }
@@ -81,14 +104,14 @@ static unsigned int createShader(const std::string& vertexShader, const std::str
     unsigned int vs = compileShader(GL_VERTEX_SHADER, vertexShader);
     unsigned int fs = compileShader(GL_FRAGMENT_SHADER, fragmentShader);
     
-    glAttachShader(program, vs);
-    glAttachShader(program, fs);
-    glLinkProgram(program);
-    glValidateProgram(program);
+    GLCall(glAttachShader(program, vs));
+    GLCall(glAttachShader(program, fs));
+    GLCall( glLinkProgram(program));
+    GLCall(  glValidateProgram(program));
     
     // Deleting the intemediate files. Kind of like deleting the intermediate .obj files in C++
-    glDeleteShader(vs);
-    glDeleteShader(fs);
+    GLCall(glDeleteShader(vs));
+    GLCall(glDeleteShader(fs));
 
     return program;
 }
@@ -110,7 +133,7 @@ int main(void)
     printf("Hello, Apple.\n");
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-
+    
     /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(640, 480, "Hello lulzie.", NULL, NULL);
     if (!window)
@@ -121,10 +144,11 @@ int main(void)
 
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
+    printf("Hello, %s.\n", glGetString(GL_VERSION));
     
      unsigned int vao;
-     glGenVertexArrays(1, &vao);
-     glBindVertexArray(vao);
+     GLCall(glGenVertexArrays(1, &vao));
+     GLCall(glBindVertexArray(vao));
     
     static const float positions[] = {
         -0.5f, -0.5f,
@@ -134,39 +158,41 @@ int main(void)
     }; // Buffer, on the CPU
 
     unsigned int buffer; // The ID of the generated buffer
-    glGenBuffers(1, &buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, buffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW);
+    GLCall(glGenBuffers(1, &buffer));
+    GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
+    GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW));
     
     static const unsigned int indices[] = { // index buffer
         0, 1, 2,
         2, 3, 0
     };
     unsigned int ibo; // Index Buffer Object
-    glGenBuffers(1, &ibo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    GLCall(glGenBuffers(1, &ibo));
+    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
+    GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW));
 
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+    GLCall(glEnableVertexAttribArray(0));
+    GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));
     
     ShaderProgramSource shader = loadShader("res/shaders/basic.shader");
 
     unsigned int program = createShader(shader.vertexShader, shader.fragmentShader);
-    glUseProgram(program);
+    GLCall(glUseProgram(program));
 
     /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(window))
+    while (true)
     {
-        /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
+        GLCall(if (glfwWindowShouldClose(window)) break;);
         
-        glDrawElements(
+        /* Render here */
+        GLCall(glClear(GL_COLOR_BUFFER_BIT));
+        
+        GLCall(glDrawElements(
                        GL_TRIANGLES,
                        6, // number of indices not vertices
                        GL_UNSIGNED_INT,
                        nullptr // no need to specify it here since we bound the ibo to the GL_ELEMENT_ARRAY_BUFFER slot
-        );
+        ));
         
         /* Drawing a Triangle in Legacy OpenGL */
         // glBegin(GL_TRIANGLES);
@@ -176,16 +202,16 @@ int main(void)
         // glEnd();
         
         /* Swap front and back buffers */
-        glfwSwapBuffers(window);
+        GLCall(glfwSwapBuffers(window));
 
         /* Poll for and process events */
-        glfwPollEvents();
+        GLCall(glfwPollEvents());
     }
     
-    glDisableVertexAttribArray(0);
-    glDeleteProgram(program);
-    glDeleteVertexArrays(1, &vao);
-    glfwTerminate();
+    GLCall(glDisableVertexAttribArray(0));
+    GLCall(glDeleteProgram(program));
+    GLCall(glDeleteVertexArrays(1, &vao));
+    GLCall(glfwTerminate());
     
     return 0;
 }
