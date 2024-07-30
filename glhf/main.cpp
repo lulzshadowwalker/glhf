@@ -3,35 +3,14 @@
 #include <sstream>
 #include <fstream>
 #include <string>
+#include "Renderer.hpp"
+#include "VertexBuffer.hpp"
+#include "IndexBuffer.hpp"
 
 #ifdef __APPLE__
 #include <OpenGL/gl3.h>
 #include <OpenGL/gl3ext.h>
 #endif
-
-#define NORMALIZE_COLOR(value) (static_cast<float>(value) / 255.0f)
-
-#define ASSERT(x) if(!(x)) __builtin_trap()
-
-#define GLCall(x)\
-    GLClearError();\
-    x;\
-    ASSERT(!GLHasError(#x, __FILE__, __LINE__))
-
-static void GLClearError() {
-    while(glGetError() != GL_NO_ERROR);
-}
-
-static bool GLHasError(std::string method, std::string filename, int line) {
-    if (GLenum error = glGetError() != GL_NO_ERROR)
-    {
-        printf("Error %d: %s at %s:%d\n", error, method.c_str(), filename.c_str(), line);
-        return true;
-    }
-    
-    return false;
-}
-
 
 struct ShaderProgramSource
 {
@@ -119,7 +98,7 @@ static unsigned int createShader(const std::string& vertexShader, const std::str
 int main(void)
 {
     GLFWwindow* window;
-
+    
     /* Initialize the library */
     if (!glfwInit()) {
         return -1;
@@ -141,14 +120,14 @@ int main(void)
         glfwTerminate();
         return -1;
     }
-
+    
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
     printf("Hello, %s.\n", glGetString(GL_VERSION));
     
-     unsigned int vao;
-     GLCall(glGenVertexArrays(1, &vao));
-     GLCall(glBindVertexArray(vao));
+    unsigned int vao;
+    GLCall(glGenVertexArrays(1, &vao));
+    GLCall(glBindVertexArray(vao));
     
     static const float positions[] = {
         -0.5f, -0.5f,
@@ -156,26 +135,25 @@ int main(void)
         0.5f, 0.5f,
         -0.5f, 0.5f,
     }; // Buffer, on the CPU
-
-    unsigned int buffer; // The ID of the generated buffer
-    GLCall(glGenBuffers(1, &buffer));
-    GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
-    GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW));
+    
+    VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+    //
+    //    unsigned int buffer; // The ID of the generated buffer
+    //    GLCall(glGenBuffers(1, &buffer));
+    //    GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
+    //    GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW));
     
     static const unsigned int indices[] = { // index buffer
         0, 1, 2,
         2, 3, 0
     };
-    unsigned int ibo; // Index Buffer Object
-    GLCall(glGenBuffers(1, &ibo));
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
-    GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW));
-
+    IndexBuffer ib(indices, 6);
+    
     GLCall(glEnableVertexAttribArray(0));
     GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));
     
     ShaderProgramSource shader = loadShader("res/shaders/basic.shader");
-
+    
     unsigned int program = createShader(shader.vertexShader, shader.fragmentShader);
     GLCall(glUseProgram(program));
     
@@ -195,11 +173,11 @@ int main(void)
         GLCall(glClear(GL_COLOR_BUFFER_BIT));
         
         GLCall(glDrawElements(
-                       GL_TRIANGLES,
-                       6, // number of indices not vertices
-                       GL_UNSIGNED_INT,
-                       nullptr // no need to specify it here since we bound the ibo to the GL_ELEMENT_ARRAY_BUFFER slot
-        ));
+                              GL_TRIANGLES,
+                              6, // number of indices not vertices
+                              GL_UNSIGNED_INT,
+                              nullptr // no need to specify it here since we bound the ibo to the GL_ELEMENT_ARRAY_BUFFER slot
+                              ));
         
         
         GLCall(glUniform4f(uColor, rgb[0], rgb[1], rgb[2], 1.0));
@@ -210,7 +188,7 @@ int main(void)
             
             rgb[i] += step;
         }
-
+        
         /* Drawing a Triangle in Legacy OpenGL */
         // glBegin(GL_TRIANGLES);
         // glVertex2d(-0.5f, -0.5f);
@@ -220,7 +198,7 @@ int main(void)
         
         /* Swap front and back buffers */
         GLCall(glfwSwapBuffers(window));
-
+        
         /* Poll for and process events */
         GLCall(glfwPollEvents());
     }

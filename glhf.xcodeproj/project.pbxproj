@@ -7,10 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		295B5C412C5962020035D0A3 /* VertexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295B5C402C5962020035D0A3 /* VertexBuffer.cpp */; };
 		295E2D462C556FB500EB0988 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 295E2D452C556FB500EB0988 /* main.cpp */; };
 		295E2D4E2C5570B800EB0988 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 295E2D4D2C5570B800EB0988 /* OpenGL.framework */; };
 		295E2D542C55741900EB0988 /* libglfw.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 295E2D4F2C55719500EB0988 /* libglfw.3.dylib */; };
 		295E2D552C55771D00EB0988 /* libglfw.3.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 295E2D4F2C55719500EB0988 /* libglfw.3.dylib */; };
+		29F82E102C595D2E00CF2B54 /* IndexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F82E0E2C595D2E00CF2B54 /* IndexBuffer.cpp */; };
+		29F82E132C595F6600CF2B54 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F82E112C595F6600CF2B54 /* Renderer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,11 +41,17 @@
 
 /* Begin PBXFileReference section */
 		2928B9562C56CB1E00391A57 /* basic.shader */ = {isa = PBXFileReference; lastKnownFileType = text; path = basic.shader; sourceTree = "<group>"; };
+		295B5C402C5962020035D0A3 /* VertexBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VertexBuffer.cpp; path = src/VertexBuffer.cpp; sourceTree = "<group>"; };
+		295B5C422C59624D0035D0A3 /* IndexBuffer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = IndexBuffer.hpp; path = src/IndexBuffer.hpp; sourceTree = "<group>"; };
 		295E2D422C556FB500EB0988 /* glhf */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = glhf; sourceTree = BUILT_PRODUCTS_DIR; };
 		295E2D452C556FB500EB0988 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		295E2D4D2C5570B800EB0988 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		295E2D4F2C55719500EB0988 /* libglfw.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libglfw.3.dylib; sourceTree = "<group>"; };
 		295E2D502C55719500EB0988 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libglfw3.a; sourceTree = "<group>"; };
+		29F82E0E2C595D2E00CF2B54 /* IndexBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = IndexBuffer.cpp; path = src/IndexBuffer.cpp; sourceTree = "<group>"; };
+		29F82E0F2C595D2E00CF2B54 /* VertexBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = VertexBuffer.hpp; path = src/VertexBuffer.hpp; sourceTree = "<group>"; };
+		29F82E112C595F6600CF2B54 /* Renderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
+		29F82E122C595F6600CF2B54 /* Renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Renderer.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +105,12 @@
 			children = (
 				2928B9542C56CB0700391A57 /* res */,
 				295E2D452C556FB500EB0988 /* main.cpp */,
+				29F82E0E2C595D2E00CF2B54 /* IndexBuffer.cpp */,
+				295B5C402C5962020035D0A3 /* VertexBuffer.cpp */,
+				29F82E0F2C595D2E00CF2B54 /* VertexBuffer.hpp */,
+				295B5C422C59624D0035D0A3 /* IndexBuffer.hpp */,
+				29F82E112C595F6600CF2B54 /* Renderer.cpp */,
+				29F82E122C595F6600CF2B54 /* Renderer.hpp */,
 			);
 			path = glhf;
 			sourceTree = "<group>";
@@ -177,7 +192,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				295B5C412C5962020035D0A3 /* VertexBuffer.cpp in Sources */,
+				29F82E132C595F6600CF2B54 /* Renderer.cpp in Sources */,
 				295E2D462C556FB500EB0988 /* main.cpp in Sources */,
+				29F82E102C595D2E00CF2B54 /* IndexBuffer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
