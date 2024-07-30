@@ -106,8 +106,8 @@ static unsigned int createShader(const std::string& vertexShader, const std::str
     
     GLCall(glAttachShader(program, vs));
     GLCall(glAttachShader(program, fs));
-    GLCall( glLinkProgram(program));
-    GLCall(  glValidateProgram(program));
+    GLCall(glLinkProgram(program));
+    GLCall(glValidateProgram(program));
     
     // Deleting the intemediate files. Kind of like deleting the intermediate .obj files in C++
     GLCall(glDeleteShader(vs));
@@ -178,7 +178,14 @@ int main(void)
 
     unsigned int program = createShader(shader.vertexShader, shader.fragmentShader);
     GLCall(glUseProgram(program));
-
+    
+    // uniforms need to be defined after `glUseProgram` so they can be applied to the shader.
+    GLCall(unsigned int uColor = glGetUniformLocation(program, "u_Color"));
+    GLCall(glUniform4f(uColor, 1.0f, 0.0f, 0.0f, 1.0f));
+    
+    float rgb[3] = {0.2f, 0.6f, 0.9f};
+    float step = 0.01;
+    
     /* Loop until the user closes the window */
     while (true)
     {
@@ -194,6 +201,16 @@ int main(void)
                        nullptr // no need to specify it here since we bound the ibo to the GL_ELEMENT_ARRAY_BUFFER slot
         ));
         
+        
+        GLCall(glUniform4f(uColor, rgb[0], rgb[1], rgb[2], 1.0));
+        for (int i = 0; i < 3; i++) {
+            if (rgb[i] > 1 || rgb[i] < 0) {
+                step *= -1;
+            }
+            
+            rgb[i] += step;
+        }
+
         /* Drawing a Triangle in Legacy OpenGL */
         // glBegin(GL_TRIANGLES);
         // glVertex2d(-0.5f, -0.5f);
