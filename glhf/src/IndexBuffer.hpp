@@ -1,16 +1,14 @@
 //
-//  VertexBuffer.hpp
+//  IndexBuffer.hpp
 //  glhf
 //
 //  Created by lulz on 30/07/2024.
 //
 
-#ifndef VertexBuffer_hpp
-#define VertexBuffer_hpp
+#ifndef IndexBuffer_hpp
+#define IndexBuffer_hpp
 
 #include <stdio.h>
-
-#endif /* VertexBuffer_hpp */
 
 class IndexBuffer {
 private:
@@ -23,3 +21,5 @@ public:
     void Bind() const;
     void Unbind() const;
 };
+
+#endif /* IndexBuffer_hpp */

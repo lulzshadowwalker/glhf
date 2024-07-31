@@ -1,5 +1,5 @@
 //
-//  VertexBuffer.cpp
+//  IndexBuffer.cpp
 //  glhf
 //
 //  Created by lulz on 30/07/2024.

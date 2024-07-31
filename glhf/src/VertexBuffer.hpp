@@ -10,9 +10,8 @@
 
 #include <stdio.h>
 
-#endif /* VertexBuffer_hpp */
-
-class VertexBuffer {
+class VertexBuffer
+{
 private:
     unsigned int m_RendererID;
 public:
@@ -22,3 +21,5 @@ public:
     void Bind() const;
     void Unbind() const;
 };
+#endif /* VertexBuffer_hpp */
+

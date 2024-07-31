@@ -17,8 +17,6 @@
 
 #include <stdio.h>
 
-#endif /* Renderer_hpp */
-
 #define NORMALIZE_COLOR(value) (static_cast<float>(value) / 255.0f)
 
 #define ASSERT(x) if(!(x)) __builtin_trap()
@@ -31,3 +29,5 @@
 void GLClearError();
 
 bool GLHasError(std::string method, std::string filename, int line);
+
+#endif /* Renderer_hpp */

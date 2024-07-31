@@ -6,6 +6,7 @@
 #include "Renderer.hpp"
 #include "VertexBuffer.hpp"
 #include "IndexBuffer.hpp"
+#include "VertexArray.hpp"
 
 #ifdef __APPLE__
 #include <OpenGL/gl3.h>
@@ -125,10 +126,6 @@ int main(void)
     glfwMakeContextCurrent(window);
     printf("Hello, %s.\n", glGetString(GL_VERSION));
     
-    unsigned int vao;
-    GLCall(glGenVertexArrays(1, &vao));
-    GLCall(glBindVertexArray(vao));
-    
     static const float positions[] = {
         -0.5f, -0.5f,
         0.5f, -0.5f,
@@ -136,7 +133,6 @@ int main(void)
         -0.5f, 0.5f,
     }; // Buffer, on the CPU
     
-    VertexBuffer vb(positions, 4 * 2 * sizeof(float));
     //
     //    unsigned int buffer; // The ID of the generated buffer
     //    GLCall(glGenBuffers(1, &buffer));
@@ -147,10 +143,14 @@ int main(void)
         0, 1, 2,
         2, 3, 0
     };
-    IndexBuffer ib(indices, 6);
     
-    GLCall(glEnableVertexAttribArray(0));
-    GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));
+    VertexArray va;
+    VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+    VertexBufferLayout layout;
+    layout.Push<float>(2);
+    va.AddBuffer(vb, layout);
+
+    IndexBuffer ib(indices, 6);
     
     ShaderProgramSource shader = loadShader("res/shaders/basic.shader");
     
@@ -203,9 +203,8 @@ int main(void)
         GLCall(glfwPollEvents());
     }
     
-    GLCall(glDisableVertexAttribArray(0));
+    // GLCall(glDisableVertexAttribArray(0)); TODO: Cleanup in either the VertexArray or IndexBuffer ?
     GLCall(glDeleteProgram(program));
-    GLCall(glDeleteVertexArrays(1, &vao));
     GLCall(glfwTerminate());
     
     return 0;
