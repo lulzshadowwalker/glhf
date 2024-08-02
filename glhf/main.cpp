@@ -8,6 +8,7 @@
 #include "IndexBuffer.hpp"
 #include "VertexArray.hpp"
 #include "Shader.hpp"
+#include "src/VertexBufferLayout.hpp"
 
 #ifdef __APPLE__
 #include <OpenGL/gl3.h>
@@ -51,11 +52,11 @@ int main(void)
         -0.5f, 0.5f,
     }; // Buffer, on the CPU
     
-    //
-    //    unsigned int buffer; // The ID of the generated buffer
-    //    GLCall(glGenBuffers(1, &buffer));
-    //    GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
-    //    GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW));
+    
+        unsigned int buffer; // The ID of the generated buffer
+        GLCall(glGenBuffers(1, &buffer));
+        GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
+        GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW));
     
     static const unsigned int indices[] = { // index buffer
         0, 1, 2,
@@ -79,22 +80,16 @@ int main(void)
     float rgb[3] = {0.2f, 0.6f, 0.9f};
     float step = 0.01;
     
+    Renderer renderer;
+    
     /* Loop until the user closes the window */
     while (true)
     {
         GLCall(if (glfwWindowShouldClose(window)) break;);
         
-        /* Render here */
-        GLCall(glClear(GL_COLOR_BUFFER_BIT));
+        renderer.Clear();
         
-        GLCall(glDrawElements(
-                              GL_TRIANGLES,
-                              6, // number of indices not vertices
-                              GL_UNSIGNED_INT,
-                              nullptr // no need to specify it here since we bound the ibo to the GL_ELEMENT_ARRAY_BUFFER slot
-                              ));
-        
-         shader.SetUniform4f("u_Color", rgb[0], rgb[1], rgb[2], 1.0f);
+        shader.SetUniform4f("u_Color", rgb[0], rgb[1], rgb[2], 1.0f);
         for (int i = 0; i < 3; i++) {
             if (rgb[i] > 1 || rgb[i] < 0) {
                 step *= -1;
@@ -103,6 +98,8 @@ int main(void)
             rgb[i] += step;
         }
         
+        renderer.Draw(va, ib, shader);
+
         /* Drawing a Triangle in Legacy OpenGL */
         // glBegin(GL_TRIANGLES);
         // glVertex2d(-0.5f, -0.5f);

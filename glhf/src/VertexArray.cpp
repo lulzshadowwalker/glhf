@@ -7,6 +7,7 @@
 
 #include "VertexArray.hpp"
 #include "../Renderer.hpp"
+#include "VertexBufferLayout.hpp"
 
 #ifdef __APPLE__
 #include <OpenGL/gl3.h>
