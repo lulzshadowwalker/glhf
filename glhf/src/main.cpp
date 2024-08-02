@@ -8,7 +8,7 @@
 #include "IndexBuffer.hpp"
 #include "VertexArray.hpp"
 #include "Shader.hpp"
-#include "src/VertexBufferLayout.hpp"
+#include "VertexBufferLayout.hpp"
 
 #ifdef __APPLE__
 #include <OpenGL/gl3.h>

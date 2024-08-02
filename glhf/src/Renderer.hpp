@@ -16,9 +16,9 @@
 #define Renderer_hpp
 
 #include <stdio.h>
-#include "./src/IndexBuffer.hpp"
-#include "./src/VertexArray.hpp"
-#include "./src/Shader.hpp"
+#include "IndexBuffer.hpp"
+#include "VertexArray.hpp"
+#include "Shader.hpp"
 
 #define NORMALIZE_COLOR(value) (static_cast<float>(value) / 255.0f)
 
