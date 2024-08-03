@@ -11,11 +11,11 @@
 		295E2D4E2C5570B800EB0988 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 295E2D4D2C5570B800EB0988 /* OpenGL.framework */; };
 		295E2D542C55741900EB0988 /* libglfw.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 295E2D4F2C55719500EB0988 /* libglfw.3.dylib */; };
 		295E2D552C55771D00EB0988 /* libglfw.3.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 295E2D4F2C55719500EB0988 /* libglfw.3.dylib */; };
-		298BBC752C5D4FB400860499 /* IndexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 298BBC6B2C5D4FB400860499 /* IndexBuffer.cpp */; };
-		298BBC762C5D4FB500860499 /* VertexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 298BBC6C2C5D4FB400860499 /* VertexBuffer.cpp */; };
-		298BBC772C5D4FB500860499 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 298BBC6E2C5D4FB400860499 /* Shader.cpp */; };
-		298BBC782C5D4FB500860499 /* VertexArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 298BBC6F2C5D4FB400860499 /* VertexArray.cpp */; };
 		29AC150E2C5E73CC00A02C2D /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29AC150C2C5E73CC00A02C2D /* Texture.cpp */; };
+		29F2CC572C5E8057006517BA /* IndexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F2CC552C5E8057006517BA /* IndexBuffer.cpp */; };
+		29F2CC5A2C5E8073006517BA /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F2CC582C5E8073006517BA /* Shader.cpp */; };
+		29F2CC5D2C5E808E006517BA /* VertexArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F2CC5B2C5E808E006517BA /* VertexArray.cpp */; };
+		29F2CC602C5E80AF006517BA /* VertexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F2CC5E2C5E80AF006517BA /* VertexBuffer.cpp */; };
 		29F82E132C595F6600CF2B54 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F82E112C595F6600CF2B54 /* Renderer.cpp */; };
 /* End PBXBuildFile section */
 
@@ -49,18 +49,18 @@
 		295E2D4D2C5570B800EB0988 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		295E2D4F2C55719500EB0988 /* libglfw.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libglfw.3.dylib; sourceTree = "<group>"; };
 		295E2D502C55719500EB0988 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libglfw3.a; sourceTree = "<group>"; };
-		298BBC6B2C5D4FB400860499 /* IndexBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = IndexBuffer.cpp; path = ../../../../Downloads/IndexBuffer.cpp; sourceTree = "<group>"; };
-		298BBC6C2C5D4FB400860499 /* VertexBuffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VertexBuffer.cpp; path = ../../../../Downloads/VertexBuffer.cpp; sourceTree = "<group>"; };
-		298BBC6D2C5D4FB400860499 /* VertexBuffer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = VertexBuffer.hpp; path = ../../../../Downloads/VertexBuffer.hpp; sourceTree = "<group>"; };
-		298BBC6E2C5D4FB400860499 /* Shader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Shader.cpp; path = ../../../../Downloads/Shader.cpp; sourceTree = "<group>"; };
-		298BBC6F2C5D4FB400860499 /* VertexArray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VertexArray.cpp; path = ../../../../Downloads/VertexArray.cpp; sourceTree = "<group>"; };
-		298BBC702C5D4FB400860499 /* Shader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Shader.hpp; path = ../../../../Downloads/Shader.hpp; sourceTree = "<group>"; };
-		298BBC712C5D4FB400860499 /* IndexBuffer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = IndexBuffer.hpp; path = ../../../../Downloads/IndexBuffer.hpp; sourceTree = "<group>"; };
-		298BBC732C5D4FB400860499 /* VertexBufferLayout.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = VertexBufferLayout.hpp; path = ../../../../Downloads/VertexBufferLayout.hpp; sourceTree = "<group>"; };
-		298BBC742C5D4FB400860499 /* VertexArray.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = VertexArray.hpp; path = ../../../../Downloads/VertexArray.hpp; sourceTree = "<group>"; };
 		29AC150C2C5E73CC00A02C2D /* Texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
 		29AC150D2C5E73CC00A02C2D /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
-		29AC15112C5E752700A02C2D /* stb_image.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = stb_image.hpp; sourceTree = "<group>"; };
+		29F2CC552C5E8057006517BA /* IndexBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = IndexBuffer.cpp; sourceTree = "<group>"; };
+		29F2CC562C5E8057006517BA /* IndexBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IndexBuffer.hpp; sourceTree = "<group>"; };
+		29F2CC582C5E8073006517BA /* Shader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Shader.cpp; sourceTree = "<group>"; };
+		29F2CC592C5E8073006517BA /* Shader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Shader.hpp; sourceTree = "<group>"; };
+		29F2CC5B2C5E808E006517BA /* VertexArray.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VertexArray.cpp; sourceTree = "<group>"; };
+		29F2CC5C2C5E808E006517BA /* VertexArray.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VertexArray.hpp; sourceTree = "<group>"; };
+		29F2CC5E2C5E80AF006517BA /* VertexBuffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = VertexBuffer.cpp; sourceTree = "<group>"; };
+		29F2CC5F2C5E80AF006517BA /* VertexBuffer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VertexBuffer.hpp; sourceTree = "<group>"; };
+		29F2CC622C5E80D7006517BA /* VertexBufferLayout.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = VertexBufferLayout.hpp; sourceTree = "<group>"; };
+		29F2CC662C5E8159006517BA /* stb_image.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = stb_image.hpp; sourceTree = "<group>"; };
 		29F82E112C595F6600CF2B54 /* Renderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Renderer.cpp; path = /Users/lulz/dev/glhf/glhf/Renderer.cpp; sourceTree = "<absolute>"; };
 		29F82E122C595F6600CF2B54 /* Renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Renderer.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -142,37 +142,37 @@
 		298BBC6A2C5D4EAE00860499 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				29AC150F2C5E750100A02C2D /* vendor */,
-				298BBC6B2C5D4FB400860499 /* IndexBuffer.cpp */,
-				298BBC712C5D4FB400860499 /* IndexBuffer.hpp */,
-				298BBC6E2C5D4FB400860499 /* Shader.cpp */,
-				298BBC702C5D4FB400860499 /* Shader.hpp */,
-				298BBC6F2C5D4FB400860499 /* VertexArray.cpp */,
-				298BBC742C5D4FB400860499 /* VertexArray.hpp */,
-				298BBC6C2C5D4FB400860499 /* VertexBuffer.cpp */,
-				298BBC6D2C5D4FB400860499 /* VertexBuffer.hpp */,
-				298BBC732C5D4FB400860499 /* VertexBufferLayout.hpp */,
+				29F2CC642C5E8127006517BA /* vendor */,
 				29F82E112C595F6600CF2B54 /* Renderer.cpp */,
 				29F82E122C595F6600CF2B54 /* Renderer.hpp */,
 				295E2D452C556FB500EB0988 /* main.cpp */,
 				29AC150C2C5E73CC00A02C2D /* Texture.cpp */,
 				29AC150D2C5E73CC00A02C2D /* Texture.hpp */,
+				29F2CC552C5E8057006517BA /* IndexBuffer.cpp */,
+				29F2CC562C5E8057006517BA /* IndexBuffer.hpp */,
+				29F2CC582C5E8073006517BA /* Shader.cpp */,
+				29F2CC592C5E8073006517BA /* Shader.hpp */,
+				29F2CC5B2C5E808E006517BA /* VertexArray.cpp */,
+				29F2CC5C2C5E808E006517BA /* VertexArray.hpp */,
+				29F2CC5E2C5E80AF006517BA /* VertexBuffer.cpp */,
+				29F2CC5F2C5E80AF006517BA /* VertexBuffer.hpp */,
+				29F2CC622C5E80D7006517BA /* VertexBufferLayout.hpp */,
 			);
 			path = src;
 			sourceTree = "<group>";
 		};
-		29AC150F2C5E750100A02C2D /* vendor */ = {
+		29F2CC642C5E8127006517BA /* vendor */ = {
 			isa = PBXGroup;
 			children = (
-				29AC15132C5E758700A02C2D /* stb_image */,
+				29F2CC652C5E8135006517BA /* stb_image */,
 			);
 			path = vendor;
 			sourceTree = "<group>";
 		};
-		29AC15132C5E758700A02C2D /* stb_image */ = {
+		29F2CC652C5E8135006517BA /* stb_image */ = {
 			isa = PBXGroup;
 			children = (
-				29AC15112C5E752700A02C2D /* stb_image.hpp */,
+				29F2CC662C5E8159006517BA /* stb_image.hpp */,
 			);
 			path = stb_image;
 			sourceTree = "<group>";
@@ -236,12 +236,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				29F82E132C595F6600CF2B54 /* Renderer.cpp in Sources */,
+				29F2CC602C5E80AF006517BA /* VertexBuffer.cpp in Sources */,
 				29AC150E2C5E73CC00A02C2D /* Texture.cpp in Sources */,
-				298BBC782C5D4FB500860499 /* VertexArray.cpp in Sources */,
-				298BBC762C5D4FB500860499 /* VertexBuffer.cpp in Sources */,
+				29F2CC5A2C5E8073006517BA /* Shader.cpp in Sources */,
+				29F2CC572C5E8057006517BA /* IndexBuffer.cpp in Sources */,
+				29F2CC5D2C5E808E006517BA /* VertexArray.cpp in Sources */,
 				295E2D462C556FB500EB0988 /* main.cpp in Sources */,
-				298BBC752C5D4FB400860499 /* IndexBuffer.cpp in Sources */,
-				298BBC772C5D4FB500860499 /* Shader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
