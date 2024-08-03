@@ -15,6 +15,7 @@
 		298BBC762C5D4FB500860499 /* VertexBuffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 298BBC6C2C5D4FB400860499 /* VertexBuffer.cpp */; };
 		298BBC772C5D4FB500860499 /* Shader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 298BBC6E2C5D4FB400860499 /* Shader.cpp */; };
 		298BBC782C5D4FB500860499 /* VertexArray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 298BBC6F2C5D4FB400860499 /* VertexArray.cpp */; };
+		29AC150E2C5E73CC00A02C2D /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29AC150C2C5E73CC00A02C2D /* Texture.cpp */; };
 		29F82E132C595F6600CF2B54 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29F82E112C595F6600CF2B54 /* Renderer.cpp */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +58,9 @@
 		298BBC712C5D4FB400860499 /* IndexBuffer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = IndexBuffer.hpp; path = ../../../../Downloads/IndexBuffer.hpp; sourceTree = "<group>"; };
 		298BBC732C5D4FB400860499 /* VertexBufferLayout.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = VertexBufferLayout.hpp; path = ../../../../Downloads/VertexBufferLayout.hpp; sourceTree = "<group>"; };
 		298BBC742C5D4FB400860499 /* VertexArray.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = VertexArray.hpp; path = ../../../../Downloads/VertexArray.hpp; sourceTree = "<group>"; };
+		29AC150C2C5E73CC00A02C2D /* Texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
+		29AC150D2C5E73CC00A02C2D /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
+		29AC15112C5E752700A02C2D /* stb_image.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = stb_image.hpp; sourceTree = "<group>"; };
 		29F82E112C595F6600CF2B54 /* Renderer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Renderer.cpp; path = /Users/lulz/dev/glhf/glhf/Renderer.cpp; sourceTree = "<absolute>"; };
 		29F82E122C595F6600CF2B54 /* Renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Renderer.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -138,6 +142,7 @@
 		298BBC6A2C5D4EAE00860499 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				29AC150F2C5E750100A02C2D /* vendor */,
 				298BBC6B2C5D4FB400860499 /* IndexBuffer.cpp */,
 				298BBC712C5D4FB400860499 /* IndexBuffer.hpp */,
 				298BBC6E2C5D4FB400860499 /* Shader.cpp */,
@@ -150,8 +155,26 @@
 				29F82E112C595F6600CF2B54 /* Renderer.cpp */,
 				29F82E122C595F6600CF2B54 /* Renderer.hpp */,
 				295E2D452C556FB500EB0988 /* main.cpp */,
+				29AC150C2C5E73CC00A02C2D /* Texture.cpp */,
+				29AC150D2C5E73CC00A02C2D /* Texture.hpp */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		29AC150F2C5E750100A02C2D /* vendor */ = {
+			isa = PBXGroup;
+			children = (
+				29AC15132C5E758700A02C2D /* stb_image */,
+			);
+			path = vendor;
+			sourceTree = "<group>";
+		};
+		29AC15132C5E758700A02C2D /* stb_image */ = {
+			isa = PBXGroup;
+			children = (
+				29AC15112C5E752700A02C2D /* stb_image.hpp */,
+			);
+			path = stb_image;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,6 +236,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				29F82E132C595F6600CF2B54 /* Renderer.cpp in Sources */,
+				29AC150E2C5E73CC00A02C2D /* Texture.cpp in Sources */,
 				298BBC782C5D4FB500860499 /* VertexArray.cpp in Sources */,
 				298BBC762C5D4FB500860499 /* VertexBuffer.cpp in Sources */,
 				295E2D462C556FB500EB0988 /* main.cpp in Sources */,
