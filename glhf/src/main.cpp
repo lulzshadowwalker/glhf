@@ -15,6 +15,10 @@
 #include "vendor/imgui/imgui_impl_glfw.h"
 #include "vendor/imgui/imgui_impl_opengl3.h"
 
+#include "vendor/glm/glm.hpp"
+#include "vendor/glm/ext/matrix_transform.hpp"
+#include "vendor/glm/ext/matrix_clip_space.hpp"
+
 #ifdef __APPLE__
 #include <OpenGL/gl3.h>
 #include <OpenGL/gl3ext.h>
@@ -39,7 +43,7 @@ int main(void)
 #endif
     
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Hello lulzie.", NULL, NULL);
+    window = glfwCreateWindow(960, 480, "Hello lulzie.", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -63,10 +67,10 @@ int main(void)
     ImGui_ImplOpenGL3_Init();
     
     static const float positions[] = {
-        -0.5f, -0.5f,   0.0f, 0.0f,
-        0.5f, -0.5f,    1.0f, 0.0f,
-        0.5f, 0.5f,     1.0f, 1.0f,
-        -0.5f, 0.5f,    0.0f, 1.0f
+        100.0f, 100.0f,   0.0f, 0.0f,
+        200.0f, 100.0f,   1.0f, 0.0f,
+        200.0f, 200.0f,   1.0f, 1.0f,
+        100.0f, 200.0f,   0.0f, 1.0f
     }; // Buffer, on the CPU
     
     
@@ -89,6 +93,9 @@ int main(void)
 
     IndexBuffer ib(indices, 6);
     
+    glm::mat4 projection = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
+    glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100.0f, 0.0f, 0.0f));
+
     Shader shader("res/shaders/basic.shader");
     shader.Bind();
     
@@ -104,6 +111,8 @@ int main(void)
     
     Renderer renderer;
     
+    glm::vec3 translation(200.0f, 200.0f, 0.0f);
+    
     /* Loop until the user closes the window */
     while (true)
     {
@@ -111,11 +120,19 @@ int main(void)
         
         renderer.Clear();
         
+        glm::mat4 model = glm::translate(glm::mat4(1.0f), translation);
+        // in reverse because OpenGL expects matrices to be stored in column-major ordering
+        glm::mat4 mvp = projection * view * model;
+        
+        shader.SetUniformMat4f("u_MVP", mvp);
+        
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
-        ImGui::ShowDemoWindow(); // Show demo window! :)
+        // ImGui::ShowDemoWindow(); // Show demo window! :)
         
+        ImGui::SliderFloat3("Translation", &translation.x, 0.0f, 960.0f);
+
         shader.SetUniform4f("u_Color", rgb[0], rgb[1], rgb[2], 1.0f);
         for (int i = 0; i < 3; i++) {
             if (rgb[i] > 1 || rgb[i] < 0) {
@@ -126,13 +143,6 @@ int main(void)
         }
         
         renderer.Draw(va, ib, shader);
-
-        /* Drawing a Triangle in Legacy OpenGL */
-        // glBegin(GL_TRIANGLES);
-        // glVertex2d(-0.5f, -0.5f);
-        // glVertex2d(0.5f, -0.5f);
-        // glVertex2d(0.0f, 0.5f);
-        // glEnd();
         
         // Rendering
         // (Your code clears your framebuffer, renders your other stuff etc.)

@@ -11,6 +11,7 @@
 #include <string>
 #include <stdio.h>
 #include <unordered_map>
+#include "vendor/glm/glm.hpp"
 
 struct ShaderProgramSource
 {
@@ -33,6 +34,7 @@ public:
     void Unbind() const;
     void SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3) const;
     void SetUniform1i(const std::string& name, int value) const;
+    void SetUniformMat4f(const std::string& name, const glm::mat4& value) const;
 private:
     unsigned int CompileShader(unsigned int type, const std::string& source);
     unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader);
