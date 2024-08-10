@@ -11,6 +11,10 @@
 #include "VertexBufferLayout.hpp"
 #include "Texture.hpp"
 
+#include "vendor/imgui/imgui.h"
+#include "vendor/imgui/imgui_impl_glfw.h"
+#include "vendor/imgui/imgui_impl_opengl3.h"
+
 #ifdef __APPLE__
 #include <OpenGL/gl3.h>
 #include <OpenGL/gl3ext.h>
@@ -45,6 +49,18 @@ int main(void)
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
     printf("Hello, %s.\n", glGetString(GL_VERSION));
+    
+    // Setup Dear ImGui context
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+    // io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // IF using Docking Branch
+
+    // Setup Platform/Renderer backends
+    ImGui_ImplGlfw_InitForOpenGL(window, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
+    ImGui_ImplOpenGL3_Init();
     
     static const float positions[] = {
         -0.5f, -0.5f,   0.0f, 0.0f,
@@ -95,6 +111,11 @@ int main(void)
         
         renderer.Clear();
         
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+        ImGui::ShowDemoWindow(); // Show demo window! :)
+        
         shader.SetUniform4f("u_Color", rgb[0], rgb[1], rgb[2], 1.0f);
         for (int i = 0; i < 3; i++) {
             if (rgb[i] > 1 || rgb[i] < 0) {
@@ -113,12 +134,22 @@ int main(void)
         // glVertex2d(0.0f, 0.5f);
         // glEnd();
         
+        // Rendering
+        // (Your code clears your framebuffer, renders your other stuff etc.)
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        // (Your code calls glfwSwapBuffers() etc.)
+        
         /* Swap front and back buffers */
         GLCall(glfwSwapBuffers(window));
         
         /* Poll for and process events */
         GLCall(glfwPollEvents());
     }
+    
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui::DestroyContext();
     
     // GLCall(glDisableVertexAttribArray(0)); TODO: Cleanup in either the VertexArray or IndexBuffer ?
     GLCall(glfwTerminate());
