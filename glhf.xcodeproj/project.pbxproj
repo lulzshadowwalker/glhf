@@ -12,6 +12,7 @@
 		295E2D542C55741900EB0988 /* libglfw.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 295E2D4F2C55719500EB0988 /* libglfw.3.dylib */; };
 		295E2D552C55771D00EB0988 /* libglfw.3.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 295E2D4F2C55719500EB0988 /* libglfw.3.dylib */; };
 		29AC150E2C5E73CC00A02C2D /* Texture.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29AC150C2C5E73CC00A02C2D /* Texture.cpp */; };
+		29B18BF52C687C2200B848DE /* TestClearColor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29B18BF32C687C2200B848DE /* TestClearColor.cpp */; };
 		29DFBFF92C67DE3500863F19 /* imgui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29DFBFF02C67DE3500863F19 /* imgui.cpp */; };
 		29DFBFFA2C67DE3500863F19 /* imgui_widgets.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29DFBFF32C67DE3500863F19 /* imgui_widgets.cpp */; };
 		29DFBFFB2C67DE3500863F19 /* imgui_draw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 29DFBFF42C67DE3500863F19 /* imgui_draw.cpp */; };
@@ -60,6 +61,9 @@
 		295E2D502C55719500EB0988 /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libglfw3.a; sourceTree = "<group>"; };
 		29AC150C2C5E73CC00A02C2D /* Texture.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Texture.cpp; sourceTree = "<group>"; };
 		29AC150D2C5E73CC00A02C2D /* Texture.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Texture.hpp; sourceTree = "<group>"; };
+		29B18BF12C687B5A00B848DE /* Test.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Test.h; sourceTree = "<group>"; };
+		29B18BF32C687C2200B848DE /* TestClearColor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TestClearColor.cpp; sourceTree = "<group>"; };
+		29B18BF42C687C2200B848DE /* TestClearColor.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TestClearColor.hpp; sourceTree = "<group>"; };
 		29DFBFEE2C67DE3500863F19 /* imstb_textedit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = imstb_textedit.h; path = "../../../../../../Downloads/imgui-1.91.0/imstb_textedit.h"; sourceTree = "<group>"; };
 		29DFBFEF2C67DE3500863F19 /* imgui_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = imgui_internal.h; path = "../../../../../../Downloads/imgui-1.91.0/imgui_internal.h"; sourceTree = "<group>"; };
 		29DFBFF02C67DE3500863F19 /* imgui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = imgui.cpp; path = "../../../../../../Downloads/imgui-1.91.0/imgui.cpp"; sourceTree = "<group>"; };
@@ -620,6 +624,7 @@
 		298BBC6A2C5D4EAE00860499 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				29B18BF22C687C0900B848DE /* tests */,
 				29F2CC642C5E8127006517BA /* vendor */,
 				29F82E112C595F6600CF2B54 /* Renderer.cpp */,
 				29F82E122C595F6600CF2B54 /* Renderer.hpp */,
@@ -637,6 +642,16 @@
 				29F2CC622C5E80D7006517BA /* VertexBufferLayout.hpp */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		29B18BF22C687C0900B848DE /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				29B18BF12C687B5A00B848DE /* Test.h */,
+				29B18BF32C687C2200B848DE /* TestClearColor.cpp */,
+				29B18BF42C687C2200B848DE /* TestClearColor.hpp */,
+			);
+			path = tests;
 			sourceTree = "<group>";
 		};
 		29DFC0062C67E3FD00863F19 /* glm */ = {
@@ -1205,6 +1220,7 @@
 				29F2CC5D2C5E808E006517BA /* VertexArray.cpp in Sources */,
 				29DFBFFA2C67DE3500863F19 /* imgui_widgets.cpp in Sources */,
 				29DFC0022C67DE8200863F19 /* imgui_impl_opengl3.cpp in Sources */,
+				29B18BF52C687C2200B848DE /* TestClearColor.cpp in Sources */,
 				29DFBFFF2C67DE6500863F19 /* main.cpp in Sources */,
 				29DFBFFD2C67DE3500863F19 /* imgui_tables.cpp in Sources */,
 				295E2D462C556FB500EB0988 /* main.cpp in Sources */,
@@ -1266,6 +1282,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					src/vendor,
+					src,
+				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -1321,6 +1341,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					src/vendor,
+					src,
+				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.2;
 				MTL_ENABLE_DEBUG_INFO = NO;

@@ -39,17 +39,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0ED02DD7-B84F-4D53-822D-F0E5658B0ACE"
-            shouldBeEnabled = "No"
+            uuid = "10FDDDF3-8548-46DF-AEEE-8F423286FFD3"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "glhf/src/main.cpp"
+            filePath = "glhf/src/tests/Test.h"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "main()"
-            landmarkType = "9">
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

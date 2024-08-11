@@ -19,6 +19,8 @@
 #include "vendor/glm/ext/matrix_transform.hpp"
 #include "vendor/glm/ext/matrix_clip_space.hpp"
 
+#include "tests/TestClearColor.hpp"
+
 #ifdef __APPLE__
 #include <OpenGL/gl3.h>
 #include <OpenGL/gl3ext.h>
@@ -66,52 +68,11 @@ int main(void)
     ImGui_ImplGlfw_InitForOpenGL(window, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
     ImGui_ImplOpenGL3_Init();
     
-    static const float positions[] = {
-        100.0f, 100.0f,   0.0f, 0.0f,
-        200.0f, 100.0f,   1.0f, 0.0f,
-        200.0f, 200.0f,   1.0f, 1.0f,
-        100.0f, 200.0f,   0.0f, 1.0f
-    }; // Buffer, on the CPU
+    glm::vec3 translation(200.0f, 200.0f, 0.0f);
     
-    
-        unsigned int buffer; // The ID of the generated buffer
-        GLCall(glGenBuffers(1, &buffer));
-        GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));
-        GLCall(glBufferData(GL_ARRAY_BUFFER, sizeof(positions), positions, GL_STATIC_DRAW));
-    
-    static const unsigned int indices[] = { // index buffer
-        0, 1, 2,
-        2, 3, 0
-    };
-    
-    VertexArray va;
-    VertexBuffer vb(positions, 4 * 4 * sizeof(float));
-    VertexBufferLayout layout;
-    layout.Push<float>(2);
-    layout.Push<float>(2);
-    va.AddBuffer(vb, layout);
-
-    IndexBuffer ib(indices, 6);
-    
-    glm::mat4 projection = glm::ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
-    glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-100.0f, 0.0f, 0.0f));
-
-    Shader shader("res/shaders/basic.shader");
-    shader.Bind();
-    
-    Texture texture("res/texture.png");
-    texture.Bind();
-    shader.SetUniform1i("u_Texture", 0);
-    
-    // uniforms need to be defined after `glUseProgram` so they can be applied to the shader.
-    shader.SetUniform4f("u_Color", 1.0f, 0.0f, 0.0f, 1.0f);
-    
-    float rgb[3] = {0.2f, 0.6f, 0.9f};
-    float step = 0.01;
+    tests::TestClearColor test;
     
     Renderer renderer;
-    
-    glm::vec3 translation(200.0f, 200.0f, 0.0f);
     
     /* Loop until the user closes the window */
     while (true)
@@ -120,40 +81,24 @@ int main(void)
         
         renderer.Clear();
         
-        glm::mat4 model = glm::translate(glm::mat4(1.0f), translation);
-        // in reverse because OpenGL expects matrices to be stored in column-major ordering
-        glm::mat4 mvp = projection * view * model;
+        test.OnUpdate(0);
+        test.OnRender();
         
-        shader.SetUniformMat4f("u_MVP", mvp);
-        
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-        // ImGui::ShowDemoWindow(); // Show demo window! :)
-        
-        ImGui::SliderFloat3("Translation", &translation.x, 0.0f, 960.0f);
-
-        shader.SetUniform4f("u_Color", rgb[0], rgb[1], rgb[2], 1.0f);
-        for (int i = 0; i < 3; i++) {
-            if (rgb[i] > 1 || rgb[i] < 0) {
-                step *= -1;
-            }
+        {
+            ImGui_ImplOpenGL3_NewFrame();
+            ImGui_ImplGlfw_NewFrame();
+            ImGui::NewFrame();
             
-            rgb[i] += step;
+            test.OnImGuiRender();
+            ImGui::SliderFloat3("Translation", &translation.x, 0.0f, 960.0f);
+            
+            ImGui::Render();
+            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         }
         
-        renderer.Draw(va, ib, shader);
         
-        // Rendering
-        // (Your code clears your framebuffer, renders your other stuff etc.)
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-        // (Your code calls glfwSwapBuffers() etc.)
-        
-        /* Swap front and back buffers */
         GLCall(glfwSwapBuffers(window));
         
-        /* Poll for and process events */
         GLCall(glfwPollEvents());
     }
     
