@@ -9,7 +9,7 @@
 #define TestClearColor_hpp
 
 #include <stdio.h>
-#include "test.h"
+#include "Test.h"
 
 namespace tests
 {

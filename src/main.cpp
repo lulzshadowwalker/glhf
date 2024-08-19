@@ -1,23 +1,9 @@
 #include <GLFW/glfw3.h>
-#include <iostream>
-#include <sstream>
-#include <fstream>
-#include <string>
 #include "Renderer.hpp"
-#include "VertexBuffer.hpp"
-#include "IndexBuffer.hpp"
-#include "VertexArray.hpp"
-#include "Shader.hpp"
-#include "VertexBufferLayout.hpp"
-#include "Texture.hpp"
 
 #include "vendor/imgui/imgui.h"
 #include "vendor/imgui/imgui_impl_glfw.h"
 #include "vendor/imgui/imgui_impl_opengl3.h"
-
-#include "vendor/glm/glm.hpp"
-#include "vendor/glm/ext/matrix_transform.hpp"
-#include "vendor/glm/ext/matrix_clip_space.hpp"
 
 #include "tests/TestClearColor.hpp"
 
@@ -63,7 +49,7 @@ int main(void)
     ImGuiIO &io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
-    // io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // IF using Docking Branch
+                                                          // io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // IF using Docking Branch
 
     // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true); // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
@@ -71,7 +57,11 @@ int main(void)
 
     glm::vec3 translation(200.0f, 200.0f, 0.0f);
 
-    tests::TestClearColor test;
+    tests::Test *currentTest = nullptr;
+    tests::TestMenu *testMenu = new tests::TestMenu(currentTest);
+    currentTest = testMenu;
+
+    testMenu->RegisterTest<tests::TestClearColor>("Clear Color");
 
     Renderer renderer;
 
@@ -80,17 +70,28 @@ int main(void)
     {
         GLCall(if (glfwWindowShouldClose(window)) break;);
 
+        GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
         renderer.Clear();
-
-        test.OnUpdate(0);
-        test.OnRender();
 
         {
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
-            test.OnImGuiRender();
+            if (currentTest)
+            {
+                currentTest->OnUpdate(0.0f);
+                currentTest->OnRender();
+                ImGui::Begin("Test");
+                if (currentTest != testMenu && ImGui::Button("< Back"))
+                {
+                    delete currentTest;
+                    currentTest = testMenu;
+                }
+                currentTest->OnImGuiRender();
+                ImGui::End();
+            }
+
             ImGui::SliderFloat3("Translation", &translation.x, 0.0f, 960.0f);
 
             ImGui::Render();
@@ -102,11 +103,16 @@ int main(void)
         GLCall(glfwPollEvents());
     }
 
+    //  NOTE: What is faster, deleting testMenu any way or using an if condition.
+    delete currentTest;
+    if (currentTest != testMenu)
+        delete testMenu;
+
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
 
-    // GLCall(glDisableVertexAttribArray(0)); TODO: Cleanup in either the VertexArray or IndexBuffer ?
+    // GLCall(glDisableVertexAttribArray(0));  TODO: Cleanup in either the VertexArray or IndexBuffer ?
     GLCall(glfwTerminate());
 
     return 0;
