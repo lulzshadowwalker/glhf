@@ -1,11 +1,12 @@
 #include <GLFW/glfw3.h>
 #include "Renderer.hpp"
 
-#include "vendor/imgui/imgui.h"
-#include "vendor/imgui/imgui_impl_glfw.h"
-#include "vendor/imgui/imgui_impl_opengl3.h"
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
 #include "tests/TestClearColor.hpp"
+#include "tests/TestTexture.hpp"
 
 #ifdef __APPLE__
 #include <OpenGL/gl3.h>
@@ -51,7 +52,7 @@ int main(void)
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
                                                           // io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // IF using Docking Branch
 
-    // Setup Platform/Renderer backends
+                                                          // Setup Platform/Renderer backends
     ImGui_ImplGlfw_InitForOpenGL(window, true); // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
     ImGui_ImplOpenGL3_Init();
 
@@ -61,7 +62,8 @@ int main(void)
     tests::TestMenu *testMenu = new tests::TestMenu(currentTest);
     currentTest = testMenu;
 
-    testMenu->RegisterTest<tests::TestClearColor>("Clear Color");
+    testMenu->RegisterTest<tests::TestClearColor>("Color Picker");
+    testMenu->RegisterTest<tests::TestTexture>("Texture");
 
     Renderer renderer;
 
@@ -101,6 +103,11 @@ int main(void)
         GLCall(glfwSwapBuffers(window));
 
         GLCall(glfwPollEvents());
+
+        if (glfwGetKey(window, GLFW_KEY_SEMICOLON) == GLFW_PRESS)
+        {
+            break;
+        }
     }
 
     //  NOTE: What is faster, deleting testMenu any way or using an if condition.
