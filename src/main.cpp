@@ -28,13 +28,14 @@
 
 int main(void)
 {
-    GLFWwindow* window;
-    
+    GLFWwindow *window;
+
     /* Initialize the library */
-    if (!glfwInit()) {
+    if (!glfwInit())
+    {
         return -1;
     }
-    
+
     glfwWindowHint(GLFW_SAMPLES, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -43,7 +44,7 @@ int main(void)
     printf("Hello, Apple.\n");
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
-    
+
     /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(960, 480, "Hello lulzie.", NULL, NULL);
     if (!window)
@@ -51,63 +52,62 @@ int main(void)
         glfwTerminate();
         return -1;
     }
-    
+
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
     printf("Hello, %s.\n", glGetString(GL_VERSION));
-    
+
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGuiIO& io = ImGui::GetIO();
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
+    ImGuiIO &io = ImGui::GetIO();
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
     // io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // IF using Docking Branch
 
     // Setup Platform/Renderer backends
-    ImGui_ImplGlfw_InitForOpenGL(window, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
+    ImGui_ImplGlfw_InitForOpenGL(window, true); // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
     ImGui_ImplOpenGL3_Init();
-    
+
     glm::vec3 translation(200.0f, 200.0f, 0.0f);
-    
+
     tests::TestClearColor test;
-    
+
     Renderer renderer;
-    
+
     /* Loop until the user closes the window */
     while (true)
     {
         GLCall(if (glfwWindowShouldClose(window)) break;);
-        
+
         renderer.Clear();
-        
+
         test.OnUpdate(0);
         test.OnRender();
-        
+
         {
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
-            
+
             test.OnImGuiRender();
             ImGui::SliderFloat3("Translation", &translation.x, 0.0f, 960.0f);
-            
+
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         }
-        
-        
+
         GLCall(glfwSwapBuffers(window));
-        
+
         GLCall(glfwPollEvents());
     }
-    
+
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
-    
+
     // GLCall(glDisableVertexAttribArray(0)); TODO: Cleanup in either the VertexArray or IndexBuffer ?
     GLCall(glfwTerminate());
-    
+
     return 0;
 }

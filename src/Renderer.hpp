@@ -22,7 +22,8 @@
 
 #define NORMALIZE_COLOR(value) (static_cast<float>(value) / 255.0f)
 
-#define ASSERT(x) if(!(x)) __builtin_trap()
+// TODO: Add a breakpoint to asserts like `__builtin_trap()`;
+#define ASSERT(x) if(!(x)) printf("Assertion failed: %s\n", #x); 
 
 #define GLCall(x)\
     GLClearError();\

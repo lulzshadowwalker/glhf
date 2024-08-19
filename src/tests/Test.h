@@ -13,7 +13,7 @@ class Test {
 public:
     Test() {};
     virtual ~Test() {};
-    
+
     virtual void OnUpdate(float deltaTime) {}
     virtual void OnImGuiRender() {}
     virtual void OnRender() {}
