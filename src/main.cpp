@@ -44,6 +44,8 @@ int main(void)
     glfwMakeContextCurrent(window);
     printf("Hello, %s.\n", glGetString(GL_VERSION));
 
+    glfwSwapInterval(1);
+
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();

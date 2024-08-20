@@ -136,7 +136,7 @@ unsigned int Shader::GetUniformLocation(const std::string& name) const
 {
     if (m_UniformLocationCache.find(name) != m_UniformLocationCache.end())
     {
-        return m_UniformLocationCache.at(name);
+        return m_UniformLocationCache[name];
     }
 
     GLCall(int location = glGetUniformLocation(m_RendererID, name.c_str()));
@@ -145,6 +145,6 @@ unsigned int Shader::GetUniformLocation(const std::string& name) const
         printf("Failed to get the uniform '%s' location\n", name.c_str());
     }
 
-    // m_UniformLocationCache.insert({ name, location });
+    m_UniformLocationCache[name] = location;
     return location;
 }

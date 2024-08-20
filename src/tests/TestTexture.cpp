@@ -59,6 +59,7 @@ namespace tests
 
     void TestTexture::OnUpdate(float deltaTime)
     {
+        //
     }
 
     void TestTexture::OnRender()

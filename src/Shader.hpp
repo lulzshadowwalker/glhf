@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <unordered_map>
 #include "vendor/glm/glm.hpp"
+#include <GLFW/glfw3.h>
 
 struct ShaderProgramSource
 {
@@ -24,12 +25,12 @@ class Shader
 private:
     unsigned int m_RendererID;
     const std::string& m_Filepath;
-    std::unordered_map<std::string, int> m_UniformLocationCache;
-    
+    mutable std::unordered_map<std::string, GLint> m_UniformLocationCache;
+
 public:
     Shader(const std::string& m_Filepath);
     ~Shader();
-    
+
     void Bind() const;
     void Unbind() const;
     void SetUniform4f(const std::string& name, float v0, float v1, float v2, float v3) const;
